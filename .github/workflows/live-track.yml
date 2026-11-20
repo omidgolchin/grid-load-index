@@ -1,0 +1,59 @@
+# Live track — DISABLED until publication.
+#
+# This workflow has no schedule trigger: it can only be run by
+# hand (workflow_dispatch), and the live runs also need the
+# EIA_API_KEY repository secret, which does not exist yet.
+#
+# To enable the live track at publication:
+#   1. add the EIA_API_KEY repository secret;
+#   2. uncomment the schedule block below.
+# The run then issues forecasts daily at 15:00 UTC: a day-ahead
+# forecast every day and a week-ahead forecast every Monday
+# (scripts/live_forecast.py adds the week horizon on Mondays),
+# each from the data published by the 13:00 UTC snapshot cutoff,
+# and commits the forecast files before their target day begins.
+# The commit time is the proof of when each forecast was made.
+
+name: live-track
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 15 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  issue-forecasts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the method environments
+        # One venv per environment family, matching live/methods.json:
+        # the harness env (baselines), Granite TTM's and Sundial's.
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt
+          python -m venv .venv-ttm
+          .venv-ttm/bin/pip install -r requirements-live-ttm.txt
+          python -m venv .venv-sundial2
+          .venv-sundial2/bin/pip install -r requirements-live-sundial.txt
+      - name: Issue today's forecasts
+        env:
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+        run: .venv/bin/python scripts/live_forecast.py --source eia
+      - name: Commit the forecasts
+        run: |
+          git config user.name "Omid Golchin"
+          git config user.email "omidgolchin@users.noreply.github.com"
+          git add live/forecasts live/snapshots live/targets live/manifest.csv
+          if git diff --cached --quiet; then
+            echo "no forecasts produced"
+            exit 1
+          fi
+          git commit -m "Live forecasts for $(date -u +%F)"
+          git push
