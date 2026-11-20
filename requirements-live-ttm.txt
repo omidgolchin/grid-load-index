@@ -1,0 +1,10 @@
+# Live-track environment for Granite TTM (its own venv: granite-tsfm
+# pins a newer transformers than Sundial's environment allows).
+# Mirrors the environment the retrospective TTM run used
+# (granite-tsfm 0.3.12). CPU-only torch keeps the install small.
+--extra-index-url https://download.pytorch.org/whl/cpu
+pandas
+numpy
+pyarrow
+torch
+granite-tsfm==0.3.12

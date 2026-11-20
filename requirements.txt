@@ -1,0 +1,8 @@
+# Harness environment (repo .venv). statsforecast is pinned: the
+# statistical baselines run at this version's defaults, and the
+# version is recorded with the results.
+numpy==2.5.5
+pandas==2.3.3
+pyarrow==26.0.1
+statsforecast==2.1.1
+pytest==9.2.0

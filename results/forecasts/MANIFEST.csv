@@ -1,0 +1,15 @@
+method,file,rows,series,windows,failed_windows,sha256,index_version,statsforecast_version,created_utc,library_version
+seasonal_naive,results/forecasts/seasonal_naive.parquet,479765,49,4998,0,dcedc65c016268c444d6c4dc0edacea36a00852db41834d8d3e83792cd593bc8,v2026.11,2.1.1,2026-11-19T18:13:05+00:00,
+naive,results/forecasts/naive.parquet,59976,49,2499,0,3d0823a9360da4ded255310dae77a6591cce32e244f29bfcad3e8e06e74f32aa,v2026.11,2.1.1,2026-11-19T18:13:05+00:00,
+operator,results/forecasts/operator.parquet,59976,49,2499,0,4ad350f7d300abd566958a06220dc068919df7633cd6f9905181a086e3c03c87,v2026.11,2.1.1,2026-11-19T18:13:05+00:00,
+autoets,results/forecasts/autoets.parquet,479765,49,4998,0,7ad6e3416c5b86a741b221e985ea81fcaab430ac37730ad1453fac134de80d2a,v2026.11,2.1.1,2026-11-19T18:13:05+00:00,
+autoarima,results/forecasts/autoarima.parquet,479765,49,4998,0,d3fa587f5bcb9ffe01c00c6a0b224a80b4bfaf635e212769f67dfe6298c7ddea,v2026.11,2.1.1,2026-11-19T18:13:05+00:00,
+moirai_2,results/forecasts/moirai_2.parquet,479765,49,4998,0,c362fb8701fc7ae3ff374a05581d44a68d2dbb3f0cd1f0a5635c35f134ab0018,v2026.11,,2026-11-19T21:42:47+00:00,uni2ts 2.0.0
+chronos_2,results/forecasts/chronos_2.parquet,479765,49,4998,0,66142e99e79182e993821c5c2df763777fa77d96472d7c61c0415e1209501cec,v2026.11,,2026-11-19T21:51:08+00:00,chronos-forecasting 2.3.2
+chronos_bolt,results/forecasts/chronos_bolt.parquet,479765,49,4998,0,90d3def6d703e700a20fcd501ee297fb17b71f72d914044d604841286a19e6e9,v2026.11,,2026-11-19T22:06:12+00:00,chronos-forecasting 2.3.2
+sundial,results/forecasts/sundial.parquet,479765,49,4998,0,48582d9db0954685f497a90adf68c6c760897695e30c031335df6d7ce6b49c09,v2026.11,,2026-11-19T23:11:49+00:00,transformers 4.40.1
+tirex,results/forecasts/tirex.parquet,479765,49,4998,0,30603e58443f614fc533859376c60427bdde046c537207dc4f8a3a19f0c274fe,v2026.11,,2026-11-19T23:33:41+00:00,tirex-ts 1.1.1
+moirai_moe,results/forecasts/moirai_moe.parquet,479765,49,4998,0,190c8856252075e7efc4deb0f87ed2215088e60767e104f6aa4b2110a0803922,v2026.11,,2026-11-19T23:55:09+00:00,uni2ts 2.0.0
+timesfm_2_5,results/forecasts/timesfm_2_5.parquet,479765,49,4998,0,d373f9d587a8132077d4f2c0f01474af0f011a77a27d3afdd1c00138e0e41d91,v2026.11,,2026-11-20T00:09:49+00:00,timesfm 3.0.2
+toto,results/forecasts/toto.parquet,479765,49,4998,0,816f140e818d21605b0c2ed40bc7c7e8203a626aff9cc6fff6d57ee06b88840b,v2026.11,,2026-11-20T02:28:09+00:00,toto-ts 0.2.0
+ttm,results/forecasts/ttm.parquet,479765,49,4998,0,cf0c4840821e138b3c4e89f3ad347e6d16f5efcd95cc358f278913e7dc088816,v2026.11,,2026-11-20T16:50:16+00:00,granite-tsfm 0.3.12

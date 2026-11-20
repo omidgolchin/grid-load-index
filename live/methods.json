@@ -1,0 +1,8 @@
+{
+  "seasonal_naive": ".venv/bin/python",
+  "naive": ".venv/bin/python",
+  "autoets": ".venv/bin/python",
+  "autoarima": ".venv/bin/python",
+  "ttm": ".venv-ttm/bin/python",
+  "sundial": ".venv-sundial2/bin/python"
+}

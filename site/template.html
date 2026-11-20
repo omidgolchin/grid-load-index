@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grid Load Forecasting Index — leaderboard</title>
+<link rel="icon" href="data:,">
+<script src="kit-theme.js"></script>
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Page-local styles only: sort affordances and row states.
+     Everything else is kit.css. */
+  th.sortable { cursor: pointer; white-space: nowrap; }
+  th.sortable:hover { color: var(--fg); }
+  th .dir { color: var(--accent); font-size: 0.85em; }
+  tr.pending td { color: var(--muted); }
+  tr.reference td { color: var(--muted); }
+  td .sub { display: block; color: var(--muted); font-size: var(--fs-caption); }
+  .flag {
+    display: inline-block; font-size: var(--fs-caption); font-weight: 600;
+    padding: 1px 7px; border-radius: var(--radius-s); margin-left: 6px;
+    background: var(--sunken); border: 1px solid var(--series-2); color: var(--series-2);
+    white-space: nowrap;
+  }
+  .ba-bar { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin: var(--sp-2) 0; }
+</style>
+</head>
+<body>
+<main>
+  <header class="kit-header">
+    <div class="kit-header-top">
+      <p class="kit-kicker">Omid Golchin · forecasting benchmarks</p>
+      <button class="kit-theme-toggle" type="button" data-kit-theme-toggle
+        aria-label="Toggle light/dark mode">◐ Theme</button>
+    </div>
+    <h1>Grid Load Forecasting Index</h1>
+    <p class="kit-tagline">How well do time-series foundation models forecast
+      US electricity demand with no training on it? A versioned leaderboard over
+      49 balancing authorities, scored against simple baselines and each grid
+      operator's own day-ahead forecast.</p>
+  </header>
+
+  <div class="stats" id="headline-stats"></div>
+
+  <section class="card" aria-labelledby="live-h">
+    <h3 id="live-h">Live track</h3>
+    <p><span class="chip" id="live-status">Live track starts on publication</span></p>
+    <p>On the live track, a forecast for each balancing authority is committed
+      to the repository <strong>before</strong> the day it forecasts begins —
+      the commit time is the proof. No model can have seen the answer, so
+      contamination is impossible by construction, and every model is ranked,
+      whenever it was released. Forecasts are scored against the demand values
+      as published seven days after the target day.</p>
+    <div class="stats">
+      <div class="stat"><span class="value num" id="live-made">0</span>
+        <span class="label">forecasts made so far</span></div>
+      <div class="stat"><span class="value num" id="live-scored">0</span>
+        <span class="label">forecasts scored so far</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="board-h">
+    <h2 id="board-h">Retrospective leaderboard</h2>
+    <p class="muted small" id="board-meta"></p>
+    <nav class="tabs" id="horizon-tabs" aria-label="Horizon">
+      <button data-horizon="day" class="active">Day-ahead (24 h)</button>
+      <button data-horizon="week">Week-ahead (168 h)</button>
+    </nav>
+    <div class="card">
+      <div class="table-scroll">
+        <table id="board">
+          <thead><tr>
+            <th class="sortable" data-key="name" scope="col">Model</th>
+            <th class="sortable num" data-key="skill" scope="col">Skill %</th>
+            <th class="num" scope="col">95% interval</th>
+            <th class="sortable num" data-key="beats_snaive" scope="col">Beats seasonal naive</th>
+            <th class="sortable num" data-key="mase" scope="col">MASE</th>
+            <th class="sortable num" data-key="coverage" scope="col">Coverage (80%)</th>
+            <th class="sortable num" data-key="beats_operator" scope="col">Beats operator</th>
+            <th class="sortable num" data-key="failed" scope="col">Failed windows</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="small muted">Click a column heading to sort. Skill is measured
+        against <strong>seasonal naive</strong> — the demand at the same hour
+        last week. A model marked
+        <span class="flag">released during window</span> came out after this
+        test window began, so it would be scored but kept out of the headline
+        ranking for the retrospective track; the live track would rank it
+        normally. <strong>No model in this release carries that mark:</strong>
+        release dates were re-checked against the first public weights in
+        November 2026 and every model predates the window. The operator
+        forecast exists for the day-ahead horizon only.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="paired-h">
+    <h2 id="paired-h">Which differences are real</h2>
+    <div class="card">
+      <p class="small muted">The intervals on the leaderboard describe each
+        model on its own; overlapping intervals do not settle a comparison.
+        These tables show <strong>paired</strong> skill differences — the
+        same bootstrap resamples applied to both models — for the horizon
+        selected above. A difference counts as real only where its interval
+        excludes 0; otherwise the two cannot be told apart. Differences are
+        in skill points.</p>
+      <h4>Against the top model (<span id="paired-top-name"></span>)</h4>
+      <div class="table-scroll">
+        <table id="paired-top">
+          <thead><tr>
+            <th scope="col">Model</th>
+            <th class="num" scope="col">Difference</th>
+            <th class="num" scope="col">95% interval</th>
+            <th scope="col">Reading</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <h4>Foundation models against AutoARIMA, the best statistical baseline</h4>
+      <div class="table-scroll">
+        <table id="paired-arima">
+          <thead><tr>
+            <th scope="col">Model</th>
+            <th class="num" scope="col">Difference</th>
+            <th class="num" scope="col">95% interval</th>
+            <th scope="col">Reading</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="paired-operator-block">
+        <h4>Against the operator forecast (day-ahead only, on the windows the operator covers)</h4>
+        <div class="table-scroll">
+          <table id="paired-operator">
+            <thead><tr>
+              <th scope="col">Model</th>
+              <th class="num" scope="col">Difference</th>
+              <th class="num" scope="col">95% interval</th>
+              <th scope="col">Reading</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="ba-h">
+    <h2 id="ba-h">Per–balancing-authority view</h2>
+    <div class="card">
+      <div class="ba-bar">
+        <label for="ba-select">Balancing authority</label>
+        <select id="ba-select"></select>
+        <span class="small muted">Same horizon as the leaderboard above.
+          Rows are sorted by error, best first.</span>
+      </div>
+      <div class="table-scroll">
+        <table id="ba-table">
+          <thead><tr>
+            <th scope="col">Model</th>
+            <th class="num" scope="col">MASE</th>
+            <th class="num" scope="col">MAE (MW)</th>
+            <th class="num" scope="col">Coverage (80%)</th>
+            <th class="num" scope="col">Peak-hour error (MW)</th>
+            <th class="num" scope="col">Windows</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="read-h">
+    <h3 id="read-h">How to read this</h3>
+    <p><strong>Skill %</strong> is the headline number. It says how much
+      lower a model's error is than the seasonal-naive guess (the demand at
+      the same hour last week), combined across every authority and issue
+      day. 0% means no better than that simple guess; a negative score means
+      worse. Higher is better.</p>
+    <p><strong>95% interval</strong> is the range the skill score plausibly
+      falls in, from a paired bootstrap over authorities and issue days.
+      It describes one model on its own: two models whose intervals
+      overlap may still be clearly different, and two whose intervals do
+      not overlap are not automatically ordered. Whether one model
+      actually beats another is judged from the <strong>paired
+      differences</strong> in "Which differences are real" above.</p>
+    <p><strong>Beats seasonal naive</strong> is the share of individual
+      forecast windows in which the model's error was lower than
+      seasonal naive's. (It is not fev-bench's "win rate", which
+      averages wins against every other model; that figure is in the
+      score files as <em>avg_win_rate</em>.)</p>
+    <p><strong>MASE</strong> is the average absolute error, scaled by how
+      hard the series is to forecast with a one-week seasonal guess. Below 1
+      means the model beat that yardstick on average; it is an error, so
+      lower is better.</p>
+    <p><strong>Coverage (80%)</strong> checks the model's own uncertainty
+      ranges: the actual demand should land inside its 80% interval about
+      80% of the time. Much lower means the model is overconfident. Models
+      that publish no intervals show a dash. Sundial's intervals are the
+      empirical ranges of 20 generated samples, exactly as the model
+      ships them — its low coverage was checked against the model's own
+      quick-start code and is a property of the model, not of this
+      harness.</p>
+    <p><strong>Beats operator</strong> is the share of days on which the
+      model's day-ahead error was lower than the grid operator's own
+      published day-ahead forecast — the number a model would have to beat
+      to be useful in operations. Day-ahead only.</p>
+    <p><strong>Failed windows</strong> counts forecast windows a run failed
+      to produce. By the index's failure rule, a failed window takes the
+      seasonal-naive score, so a failure can never flatter a model.</p>
+    <p><strong>Released during window</strong> would mark a model released
+      after the retrospective window started (3 November 2025). It might
+      in principle have trained on part of the test data, so it would be
+      scored and shown, but excluded from the retrospective headline
+      ranking; on the live track its forecasts are made before the data
+      exists, so it would rank normally there. No model in this release
+      carries the mark: every model's first public weights predate the
+      window.</p>
+  </section>
+
+  <footer class="kit-footer">
+    <p>Built by Omid Golchin. Shared design:
+      <a href="https://github.com/omidgolchin/omid-tools-kit">omid-tools-kit</a>.</p>
+    <p>Data: EIA Form 930 hourly demand by balancing authority, via the PUDL
+      stable release (EIA data is US-government public domain; PUDL is
+      CC-BY-4.0). Scoring follows fev-bench (Shchur et al. 2025). Page
+      generated <span id="gen-date"></span> from the release's score files.</p>
+  </footer>
+</main>
+
+<script type="application/json" id="gli-data">__GLI_DATA__</script>
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("gli-data").textContent);
+  var state = { horizon: "day", sortKey: "skill", sortDir: -1, ba: "PJM" };
+
+  function fmt(v, digits) {
+    if (v === null || v === undefined) return "—";
+    return Number(v).toFixed(digits);
+  }
+  function pct(v) { return v === null || v === undefined ? "—" : (v * 100).toFixed(1) + "%"; }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  // Headline stats
+  var stats = [
+    [DATA.series.length, "balancing authorities"],
+    [DATA.issue_days, "issue days (Mondays)"],
+    [DATA.window_label, "retrospective window"],
+    [DATA.index_version, "index release"]
+  ];
+  document.getElementById("headline-stats").innerHTML = stats.map(function (s) {
+    return '<div class="stat"><span class="value">' + esc(s[0]) + '</span>' +
+      '<span class="label">' + esc(s[1]) + "</span></div>";
+  }).join("");
+  document.getElementById("board-meta").textContent =
+    "Release " + DATA.index_version + " · forecasts issued at 15:00 UTC on " +
+    "Mondays from " + DATA.window_start + " to " + DATA.window_end +
+    ", each from the 2,048 hours of demand published by 13:00 UTC that day.";
+  document.getElementById("gen-date").textContent = DATA.generated;
+  document.getElementById("live-made").textContent = DATA.live.forecasts_made;
+  document.getElementById("live-scored").textContent = DATA.live.forecasts_scored;
+
+  function sortRows(rows) {
+    var key = state.sortKey, dir = state.sortDir;
+    return rows.slice().sort(function (a, b) {
+      if (a.pending !== b.pending) return a.pending ? 1 : -1;
+      var av = a[key], bv = b[key];
+      if (av === null || av === undefined) return 1;
+      if (bv === null || bv === undefined) return -1;
+      if (typeof av === "string") return dir * av.localeCompare(bv);
+      return dir * (av - bv);
+    });
+  }
+
+  function renderBoard() {
+    var rows = sortRows(DATA.rows[state.horizon]);
+    var body = rows.map(function (r) {
+      if (r.pending) {
+        return '<tr class="pending"><td>' + esc(r.name) +
+          ' <span class="tag">not scored in v1</span>' +
+          (r.note ? '<span class="sub">' + esc(r.note) + '</span>' : '') +
+          '</td>' +
+          "<td class='num'>—</td><td class='num'>—</td><td class='num'>—</td>" +
+          "<td class='num'>—</td><td class='num'>—</td><td class='num'>—</td>" +
+          "<td class='num'>—</td></tr>";
+      }
+      var flag = r.released_during_window
+        ? '<span class="flag">released during window</span>' : "";
+      var interval = (r.ci_lo === null) ? "—"
+        : "[" + fmt(r.ci_lo, 1) + ", " + fmt(r.ci_hi, 1) + "]";
+      return '<tr class="' + (r.kind === "reference" ? "reference" : "") + '">' +
+        "<td>" + esc(r.name) + flag +
+        (r.kind === "reference" ? '<span class="sub">the reference every score is measured against</span>' : "") +
+        "</td>" +
+        '<td class="num">' + fmt(r.skill, 1) + "</td>" +
+        '<td class="num">' + interval + "</td>" +
+        '<td class="num">' + pct(r.beats_snaive) + "</td>" +
+        '<td class="num">' + fmt(r.mase, 3) + "</td>" +
+        '<td class="num">' + pct(r.coverage) + "</td>" +
+        '<td class="num">' + pct(r.beats_operator) + "</td>" +
+        '<td class="num">' + r.failed + " / " + r.windows + "</td></tr>";
+    }).join("");
+    document.querySelector("#board tbody").innerHTML = body;
+    document.querySelectorAll("#board th.sortable").forEach(function (th) {
+      var active = th.getAttribute("data-key") === state.sortKey;
+      th.setAttribute("aria-sort", active ? (state.sortDir === 1 ? "ascending" : "descending") : "none");
+      var label = th.textContent.replace(/ [▲▼]$/, "");
+      th.innerHTML = esc(label) + (active ? ' <span class="dir">' + (state.sortDir === 1 ? "▲" : "▼") + "</span>" : "");
+    });
+  }
+
+  function pairedRow(r) {
+    var reading = r.verdict === "method_beats_reference"
+      ? esc(r.method) + " beats " + esc(r.reference)
+      : r.verdict === "reference_beats_method"
+        ? esc(r.reference) + " beats " + esc(r.method)
+        : "level — cannot be told apart";
+    var interval = (r.ci_lo === null) ? "—"
+      : "[" + fmt(r.ci_lo, 1) + ", " + fmt(r.ci_hi, 1) + "]";
+    return "<tr><td>" + esc(r.method) + "</td>" +
+      '<td class="num">' + fmt(r.diff, 1) + "</td>" +
+      '<td class="num">' + interval + "</td>" +
+      "<td>" + reading + "</td></tr>";
+  }
+
+  function renderPaired() {
+    var paired = (DATA.paired || {})[state.horizon] || {};
+    var top = paired.vs_top || [];
+    document.getElementById("paired-top-name").textContent =
+      top.length ? top[0].reference : "";
+    document.querySelector("#paired-top tbody").innerHTML = top.map(pairedRow).join("");
+    document.querySelector("#paired-arima tbody").innerHTML =
+      (paired.vs_autoarima || []).map(pairedRow).join("");
+    var opBlock = document.getElementById("paired-operator-block");
+    var op = paired.vs_operator || [];
+    opBlock.style.display = op.length ? "" : "none";
+    document.querySelector("#paired-operator tbody").innerHTML = op.map(pairedRow).join("");
+  }
+
+  function renderBA() {
+    var rows = (DATA.per_ba[state.horizon][state.ba] || []);
+    document.querySelector("#ba-table tbody").innerHTML = rows.map(function (r) {
+      return "<tr><td>" + esc(r.name) + "</td>" +
+        '<td class="num">' + fmt(r.mase, 3) + "</td>" +
+        '<td class="num">' + fmt(r.mae, 0) + "</td>" +
+        '<td class="num">' + pct(r.coverage) + "</td>" +
+        '<td class="num">' + fmt(r.peak_error, 0) + "</td>" +
+        '<td class="num">' + r.windows + "</td></tr>";
+    }).join("");
+  }
+
+  // BA select
+  var select = document.getElementById("ba-select");
+  select.innerHTML = DATA.series.map(function (s) {
+    return '<option value="' + esc(s) + '"' + (s === state.ba ? " selected" : "") + ">" + esc(s) + "</option>";
+  }).join("");
+  select.addEventListener("change", function () { state.ba = select.value; renderBA(); });
+
+  // Horizon tabs
+  document.querySelectorAll("#horizon-tabs button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      state.horizon = b.getAttribute("data-horizon");
+      document.querySelectorAll("#horizon-tabs button").forEach(function (x) {
+        x.classList.toggle("active", x === b);
+      });
+      renderBoard(); renderBA(); renderPaired();
+    });
+  });
+
+  // Sorting
+  document.querySelectorAll("#board th.sortable").forEach(function (th) {
+    th.addEventListener("click", function () {
+      var key = th.getAttribute("data-key");
+      if (state.sortKey === key) { state.sortDir = -state.sortDir; }
+      else { state.sortKey = key; state.sortDir = key === "name" ? 1 : -1; }
+      renderBoard();
+    });
+  });
+
+  renderBoard();
+  renderBA();
+  renderPaired();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+ba,timezone,is_generation_only_pudl,rows_in_span,duplicate_timestamps,first_row_utc,last_row_utc,span_hours,demand_values,missing_hours,flagged_hours,missing_or_flagged_share,forecast_coverage_share,verdict,exclusion_reason
+AEC,America/Chicago,False,23382,0,2019-01-01 00:00:00,2021-09-01 05:00:00,68672,23281,45391,122,0.6613,0.3383,exclude,reporting ends 2021-09-01; missing-or-flagged share 66.1% of the span
+AECI,America/Chicago,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68635,37,49,0.0007,1.0,include,
+AVA,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68648,24,80,0.0012,0.9997,include,
+AVRN,America/Los_Angeles,True,68648,0,2019-01-01 00:00:00,2026-10-31 07:00:00,68672,0,68672,68648,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+AZPS,America/Phoenix,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68610,62,128,0.0019,0.9993,include,
+BANC,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68640,32,1495,0.0218,0.9946,include,
+BHBA,America/Denver,False,5136,0,2026-04-01 07:00:00,2026-11-01 06:00:00,68672,3624,65048,1518,0.9473,0.0531,exclude,"reporting starts 2026-04-01, not 2019-01-01"
+BPAT,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68648,24,46,0.0007,1.0,include,
+CHPD,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68581,91,305,0.0044,0.999,include,
+CISO,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68500,172,255,0.0037,0.9983,include,
+CPLE,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68550,122,124,0.0018,0.9985,include,
+CPLW,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68573,99,157,0.0023,0.9989,include,
+DEAA,America/Phoenix,True,68648,0,2019-01-01 00:00:00,2026-10-31 07:00:00,68672,0,68672,68648,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+DOPD,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,67232,1440,1936,0.0282,0.9937,include,
+DUK,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68597,75,72,0.0011,0.9992,include,
+EEI,America/Chicago,False,10183,0,2019-01-01 00:00:00,2020-02-29 06:00:00,68672,0,68672,10183,1.0,0.0,exclude,reports no demand in the span (generation/interchange rows only)
+EPE,America/Phoenix,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68590,82,144,0.0021,0.9993,include,
+ERCO,America/Chicago,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68598,74,81,0.0012,0.9993,include,
+FMPP,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68497,175,409,0.006,0.9967,include,
+FPC,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68597,75,81,0.0012,0.9992,include,
+FPL,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,67888,784,859,0.0126,0.9973,include,
+GCPD,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68646,26,286,0.0042,0.9994,include,
+GLHB,America/Chicago,True,21959,0,2020-02-29 07:00:00,2022-09-01 05:00:00,68672,0,68672,21959,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+GRID,America/Los_Angeles,True,68648,0,2019-01-01 00:00:00,2026-10-31 07:00:00,68672,0,68672,68648,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+GRIF,America/Phoenix,True,42368,0,2019-01-01 00:00:00,2023-11-01 07:00:00,68672,0,68672,42368,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+GRMA,America/Phoenix,True,0,0,,,68672,0,68672,0,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+GVL,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,67052,1620,1984,0.0289,0.9817,include,
+GWA,America/Denver,True,68647,0,2019-01-01 00:00:00,2026-10-31 06:00:00,68672,0,68672,68647,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+HGMA,America/Phoenix,True,56240,0,2019-01-01 00:00:00,2025-06-01 07:00:00,68672,0,68672,56240,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+HST,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68595,77,1037,0.0151,0.9954,include,
+IID,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68480,192,741,0.0108,0.9962,include,
+IPCO,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68648,24,33,0.0005,1.0,include,
+ISNE,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68640,32,30,0.0005,1.0,include,
+JEA,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68375,297,334,0.0049,0.9539,include,
+LDWP,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68484,188,382,0.0056,0.9923,include,
+LGEE,America/New_York,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68474,198,297,0.0044,0.9988,include,
+MISO,America/New_York,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68574,98,98,0.0015,0.9986,include,
+NEVP,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68630,42,107,0.0016,0.9992,include,
+NSB,America/New_York,False,8934,0,2019-01-01 00:00:00,2020-01-08 05:00:00,68672,8447,60225,775,0.8812,0.1227,exclude,reporting ends 2020-01-08; missing-or-flagged share 88.1% of the span
+NWMT,America/Denver,False,68671,0,2019-01-01 00:00:00,2026-11-01 06:00:00,68672,68621,51,276,0.004,0.9925,include,
+NYIS,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68645,27,38,0.0006,1.0,include,
+OVEC,America/New_York,False,0,0,,,68672,0,68672,0,1.0,0.0,exclude,reports no demand in the span (generation/interchange rows only)
+PACE,America/Denver,False,68671,0,2019-01-01 00:00:00,2026-11-01 06:00:00,68672,68647,25,145,0.0021,0.9989,include,
+PACW,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68648,24,48,0.0007,1.0,include,
+PGE,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68623,49,67,0.001,1.0,include,
+PJM,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68456,216,228,0.0034,0.9965,include,
+PNM,America/Phoenix,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68648,24,92,0.0013,1.0,include,
+PSCO,America/Denver,False,68671,0,2019-01-01 00:00:00,2026-11-01 06:00:00,68672,68623,49,119,0.0017,0.9881,include,
+PSEI,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,59410,9262,9345,0.1361,1.0,exclude,missing-or-flagged share 13.6% of the span (>= 5%)
+SC,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68416,256,347,0.0051,0.9964,include,
+SCEG,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68164,508,559,0.0082,0.987,include,
+SCL,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68641,31,80,0.0012,0.9957,include,
+SEC,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68161,511,20437,0.2976,0.9956,exclude,missing-or-flagged share 29.8% of the span (>= 5%)
+SEPA,America/Chicago,True,68646,0,2019-01-01 00:00:00,2026-10-31 05:00:00,68672,0,68672,68646,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+SOCO,America/Chicago,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68621,51,75,0.0011,0.9995,include,
+SPA,America/Chicago,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68478,194,747,0.0109,0.9837,include,
+SRP,America/Phoenix,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68403,269,360,0.0052,0.9252,include,
+SWPP,America/Chicago,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68621,51,2985,0.0435,0.9916,include,
+SWPW,America/Denver,False,5136,0,2026-04-01 06:00:00,2026-11-01 05:00:00,68672,5111,63561,1282,0.9439,0.0682,exclude,"reporting starts 2026-04-01, not 2019-01-01"
+TAL,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,67925,747,815,0.0119,1.0,include,
+TEC,America/New_York,False,68669,0,2019-01-01 00:00:00,2026-11-01 04:00:00,68672,68564,108,108,0.0016,0.9989,include,
+TEPC,America/Phoenix,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,67662,1010,1041,0.0152,0.9972,include,
+TIDC,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68528,144,494,0.0072,0.9983,include,
+TPWR,America/Los_Angeles,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68648,24,123,0.0018,1.0,include,
+TVA,America/Chicago,False,68670,0,2019-01-01 00:00:00,2026-11-01 05:00:00,68672,68645,27,52,0.0008,0.999,include,
+WACM,America/Phoenix,False,63536,0,2019-01-01 00:00:00,2026-04-01 07:00:00,68672,63392,5280,691,0.0849,0.9207,exclude,reporting ends 2026-04-01; missing-or-flagged share 8.5% of the span
+WALC,America/Phoenix,False,68672,0,2019-01-01 00:00:00,2026-11-01 07:00:00,68672,68600,72,550,0.008,0.9997,include,
+WAUW,America/Denver,False,63535,0,2019-01-01 00:00:00,2026-04-01 06:00:00,68672,63534,5138,681,0.0847,0.9252,exclude,reporting ends 2026-04-01; missing-or-flagged share 8.5% of the span
+WWA,America/Denver,True,59167,0,2019-01-01 00:00:00,2025-10-01 06:00:00,68672,0,68672,59167,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand
+YAD,America/New_York,True,68645,0,2019-01-01 00:00:00,2026-10-31 04:00:00,68672,0,68672,68645,1.0,0.0,exclude,generation-only balancing authority (PUDL flag); reports no demand

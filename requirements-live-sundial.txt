@@ -1,0 +1,10 @@
+# Live-track environment for Sundial (its own venv: the model's
+# generation code targets transformers 4.40.1, DECISIONS #35).
+# Mirrors the environment the retrospective Sundial run used.
+# CPU-only torch keeps the install small.
+--extra-index-url https://download.pytorch.org/whl/cpu
+pandas
+numpy
+pyarrow
+torch
+transformers==4.40.1

@@ -1,0 +1,3 @@
+file,kind,bytes,sha256
+data/snapshots/snapshots.parquet,snapshots,3192660,eb2fa8026dcf0070738fe9501e110426cf76f421db3dbb0edb00e430088f0f6e
+data/snapshots/targets.parquet,targets,3332655,8510ebcd37e99de6310b56b1b017847d0c7651ec6e3114d8bfccf6d53ae9bb3f

@@ -1,0 +1,45 @@
+# Python
+.venv/
+.venv-fm/
+.venv-uni2ts/
+.venv-timemoe/
+.venv-ttm/
+.venv-chronos/
+.venv-timesfm/
+.venv-tirex/
+.venv-toto/
+.venv-sundial/
+.venv-sundial2/
+__pycache__/
+
+# Pinned source files (hashes recorded in DATA_SOURCES.md; the
+# extraction and screen scripts read them from here)
+data/source/
+
+# Extracted evaluation data (rebuilt by scripts/extract_data.py;
+# hashes recorded in data/manifests/extraction_manifest.csv)
+data/eval/
+
+# Built snapshots and targets (rebuilt by scripts/build_snapshots.py;
+# hashes recorded in data/manifests/snapshot_manifest.csv)
+data/snapshots/
+
+# Run outputs: forecast and score parquets are large; the manifests
+# and summary CSVs next to them are committed.
+results/forecasts/parts/
+results/forecasts/parts_ttm1536/
+results/forecasts/*.parquet
+results/scores/*.parquet
+
+# Live run-state files written by the runners
+RUN_STATE.md
+RUN_STATE_*.md
+results/ttm1536_runner_state.md
+results/*.log
+
+# Kaggle dataset staging and generated kernel directories
+# (kaggle/build_kernel.py itself is source and stays tracked)
+data/kaggle_dataset/
+kaggle/*_probe/
+kaggle/*_full/
+.pytest_cache/
