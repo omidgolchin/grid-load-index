@@ -16,7 +16,7 @@ added the rest of the Step 8 record:
   series).
 
 Version 3 is the post-review refresh proposed in
-REPORT_INDEX_2.md: the regenerated score files (summary.csv
+reports/REPORT_INDEX_2.md: the regenerated score files (summary.csv
 with beats_snaive and avg_win_rate, the new paired.csv,
 window_scores.parquet), Moirai 2.0 unflagged, and Granite
 TTM's forecasts from the 1,536-hour-context run replacing

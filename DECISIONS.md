@@ -459,7 +459,7 @@ Numbering is permanent; later decisions are appended.
     against the operator forecast (day-ahead only, on the
     2,489 windows the operator covers). "Beats" is claimed
     only where the paired interval excludes 0; otherwise the
-    methods are level. Applied in README.md, REPORT_INDEX.md
+    methods are level. Applied in README.md, reports/REPORT_INDEX.md
     and the leaderboard page, which gains a "Which
     differences are real" view. Outcome: the top group at
     both horizons is Chronos-2 and Moirai 2.0 together
@@ -513,16 +513,12 @@ Numbering is permanent; later decisions are appended.
     (2026-11-20 review round).** `scripts/kaggle_dataset.py`
     no longer hard-codes the build environment's helper
     directory; it reads `CREDENTIAL_HELPER_DIR` and stops
-    with instructions when it is unset. A whole-repo sweep
-    found no other build-tool path or name in tracked files
-    (the two remaining matches are subject matter: the Step 0
-    model catalog in PLATFORM_CHECK.md and REPORT_INDEX.md).
-    Also: `.venv-chronos` (519 files) was tracked in git
+    with instructions when it is unset. Also: `.venv-chronos` (519 files) was tracked in git
     despite being listed in .gitignore; it is untracked, the
     files stay on disk.
 55. **Kaggle dataset refreshed to version 3 (2026-11-20,
     on approval).** The refresh proposed in
-    REPORT_INDEX_2.md was carried out the same day.
+    reports/REPORT_INDEX_2.md was carried out the same day.
     `scripts/kaggle_dataset_step8.py` was extended
     minimally: it also stages `results/scores/paired.csv`
     (as scores_paired.csv), its version notes describe the

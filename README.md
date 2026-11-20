@@ -4,20 +4,34 @@
 good are time-series foundation models with no training on this
 data?**
 
-The index answers that question as a versioned leaderboard. Ten
-foundation models were selected to run zero-shot on the same
-forecast tasks as simple baselines and as each grid operator's
-own day-ahead forecast — first on a retrospective backtest over
-49 balancing authorities, and then on a live track whose
-forecasts are committed before the demand they predict exists.
-Nine of the ten carry scores in this release; Time-MoE is
-listed unscored (see below).
+A versioned leaderboard that runs ten time-series foundation models zero-shot on the same forecasts as simple baselines and as each grid operator's own day-ahead forecast. There are two tracks:
 
-Current release: **v2026.11** (retrospective window 3 November
-2025 – 19 October 2026). Time-MoE is not scored in v1: its
-Kaggle run failed in its environment and the local re-run was
-stopped at 2 of 49 series (DECISIONS.md #45). Its row is marked
-unscored in the tables below.
+- a retrospective backtest over 49 balancing authorities;
+- a live track, whose forecasts are committed before the demand they predict exists.
+
+**[Open the interactive leaderboard](https://omidgolchin.github.io/grid-load-index/)**: sortable tables, the paired comparisons and a per-authority view.
+
+## What release v2026.11 shows
+
+All claims below rest on paired differences on the same windows. "Beats" is used only where the paired 95% interval excludes zero.
+
+- **Two models share the top spot.** Chronos-2 and Moirai 2.0 cannot be told apart, either day-ahead (−0.2 points [−2.2, +1.9]) or week-ahead (−0.6 [−2.9, +1.2]). Together they beat every other model tested.
+- **Most foundation models beat the classic statistical baseline.**
+  - Day-ahead, seven of nine beat AutoARIMA, by 4–10 points; Sundial and Granite TTM are level with it.
+  - Week-ahead, all nine beat it.
+  - None was trained on this data, and each sees only past load.
+- **The grid operators' own forecasts are still best day-ahead.**
+  - The operator beats every method: 14 points ahead of Chronos-2, with an interval of [+1.7, +23.3].
+  - No model beats the operator on more than 38% of days.
+  - This is a real-world bar, not a matched comparison (see Limits).
+- **Most intervals are too narrow.**
+  - At an 80% target, most models cover 72–75% of outcomes day-ahead.
+  - Week-ahead, Chronos-Bolt and Moirai 2.0 cover about 60%.
+  - Sundial's intervals, as shipped, cover 32%.
+
+![Skill by method and horizon, with 95% intervals](results/chart_skill.png)
+
+Current release: **v2026.11**, with a retrospective window from 3 November 2025 to 19 October 2026. Time-MoE is listed but not scored in v1 (DECISIONS.md #45).
 
 ## The two tracks
 
@@ -34,7 +48,8 @@ forecast file before its target day begins. The commit time is
 the proof of when the forecast was made, so no model can have
 seen the answer. Live forecasts are scored against the demand
 values as published seven days after the target day. The live
-track is built and dry-run tested; it starts on publication.
+track is built and dry-run tested; it starts once its schedule
+and the EIA API key are switched on.
 
 ## Results — release v2026.11
 
@@ -98,9 +113,9 @@ cannot be reproduced on Kaggle, and the local CPU re-run was
 stopped at 2 of 49 series; its two completed series parts are
 kept for a possible later release.
 
-The interactive leaderboard — sortable, with a
-per-balancing-authority view — is generated from these score
-files by `scripts/build_site.py` into `docs/`.
+The [interactive leaderboard](https://omidgolchin.github.io/grid-load-index/)
+is generated from these score files by `scripts/build_site.py`
+into `docs/`; the chart above by `scripts/make_chart.py`.
 
 ## How to read the scores
 
@@ -240,7 +255,7 @@ The foundation models run one adapter per model
 environment; the Kaggle dataset and notebook (below) carry the
 same inputs, forecasts and scores. A private Kaggle dataset,
 `grid-load-index-data`, holds the run inputs, the pinned
-snapshot, the forecasts and the scores (version 2), and a
+snapshot, the forecasts and the scores (version 3), and a
 private notebook, `grid-load-index-leaderboard-rebuild`,
 rebuilds the leaderboard tables from it and checks them
 against the shipped summary (DECISIONS.md #47).
@@ -256,8 +271,12 @@ changes.
 
 - `PLAN.md`, `MODELS.md`, `SCREEN.md`, `DATA_SOURCES.md` — the
   fixed protocol, model record, series screen and data record.
+- `DEVIATIONS.md` — every change made after scoring, with both
+  versions reported.
+- `reports/` — the build reports, including the Kaggle
+  Benchmarks platform check.
 - `DECISIONS.md`, `SPEND.md` — every decision taken under the
-  brief's decision rules, and the compute ledger.
+  plan's decision rules, and the compute ledger.
 - `src/` — task spec, cleaning, snapshots, scoring,
   contamination flagging, the EIA API client, and one adapter
   per model in `src/adapters/`.

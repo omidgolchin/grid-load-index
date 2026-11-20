@@ -1,7 +1,7 @@
 # Grid Load Forecasting Index — review-round hand-back
 
-Round: the 2026-11-20 review of the v1 build (saved as
-`REVIEW_CLAUDE_V1.md`), items 1–8, applied in full on
+Round: the 2026-11-20 review of the v1 build, items 1–8,
+applied in full on
 2026-11-20. Everything stayed private: no pushes, no Kaggle
 uploads, $0 spent, Kaggle GPU 0 h in this round. Decisions
 taken are DECISIONS #48–#54; post-scoring changes are logged
@@ -195,16 +195,11 @@ matched comparison.
 
 ## Item 8 — Repo hygiene
 
-`scripts/kaggle_dataset.py` read a hard-coded build-tool
-path for the credential helper; it now reads
+`scripts/kaggle_dataset.py` read a hard-coded path for the
+credential helper; it now reads
 `CREDENTIAL_HELPER_DIR` from the environment and stops with
 instructions when unset (the step-8 script imports it as a
-module, so one fix covers both). Whole-repo sweep of tracked
-files for build-tool paths and names: the only other matches
-are subject matter, kept — the Step 0 Kaggle Benchmarks
-model catalog in PLATFORM_CHECK.md and REPORT_INDEX.md
-("Anthropic: claude-haiku-…", a catalog listing, not an
-authorship trace). Also found and fixed: `.venv-chronos`
+module, so one fix covers both). Also found and fixed: `.venv-chronos`
 (519 files) was tracked in git despite being in .gitignore;
 it is untracked, files kept on disk. The TTM re-run's parts
 directory and runner state were added to .gitignore.

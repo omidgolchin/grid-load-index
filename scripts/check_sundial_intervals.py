@@ -1,6 +1,6 @@
 """Check Sundial's intervals against the model's own quick-start.
 
-Review item 4 (Claude's review of the v1 build, 2026-11-20):
+Review item 4 (review of the v1 build, 2026-11-20):
 Sundial's scored 80% coverage is 0.32, far below the nominal
 0.80. Before that number is published, verify on 3 windows
 that the adapter's sampling matches the official Sundial

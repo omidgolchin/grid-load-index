@@ -4,7 +4,7 @@ Changes made after scoring that alter a ranking input or a
 scored artefact. Each entry reports both versions, so the
 original v1 numbers stay recoverable. Decisions behind them
 are in DECISIONS.md; the review round that produced both
-entries is recorded in REPORT_INDEX_2.md.
+entries is recorded in reports/REPORT_INDEX_2.md.
 
 ## 1. Moirai 2.0 release date corrected (2026-11-20)
 
